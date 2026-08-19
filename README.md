@@ -17,7 +17,7 @@ dsh web GUI 的提示音插件：
 
 ## 安装
 
-### 方式一：npm 发布安装（推荐，需先发布到 npm）
+### 方式一：npm 安装（已发布到npm）
 
 ```bash
 dsh plugin --profile web add dsh-notify-tone
