@@ -3,6 +3,9 @@ node_modules/
 lib/*.map
 *.tsbuildinfo
 
+# 凭据：绝不提交（npm 访问令牌）
+.npmrc
+
 # 日志与临时文件
 *.log
 .DS_Store
