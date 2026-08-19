@@ -59,3 +59,34 @@ dsh plugin --profile web add link:/绝对路径/dsh-notify-tone
 - 听不到声音：浏览器自动播放策略要求页面至少被点击过一次；点击页面任意位置后再试。
 - 收不到系统通知：① 打开 🔔 菜单「系统通知」开关并允许浏览器的授权询问；② 若显示"权限已被禁用"，需到浏览器站点设置（地址栏左侧锁图标 → 网站设置）中把「通知」改为允许；③ Windows 还需确认系统"通知和操作"未对浏览器静音。
 - 若之后运行过 `pnpm install` 导致手动放置的包被清理，请重新复制本目录到 `~/.dsh/profiles/web/node_modules/`（或在 profile 目录执行 `dsh plugin --profile web add link:<本目录绝对路径>`）。
+
+### pnpm 11 + dsh-better-sidebar：安装后插件不生效
+
+**现象**：执行 `dsh plugin --profile web add dsh-notify-tone` 时提示安装成功（`+ dsh-notify-tone ^0.2.0`），但末尾报
+`[ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: node-pty@1.1.0` 和 `dsh: pnpm failed ...`；
+重启 dsh 后插件没有出现。
+
+**原因**：pnpm 11 的安全策略默认**阻止依赖运行构建脚本**。`node-pty` 是
+`dsh-better-sidebar`（另一个第三方插件）的依赖，与本插件无关；当它的构建脚本被忽略时，
+pnpm 会以**非零退出码**结束，而 dsh 只在 pnpm 成功（退出码 0）时才把插件同步进
+`dsh.profile.bundles`，导致本插件依赖已装、但未进入 bundles 层、不加载。
+
+**解决**：编辑 profile 的 `pnpm-workspace.yaml`（`~/.dsh/profiles/web/pnpm-workspace.yaml`），
+在 `allowBuilds:` 下把 node-pty 设为允许构建：
+
+```yaml
+allowBuilds:
+  node-pty: true
+```
+
+（如果该行是占位文本 `node-pty: set this to true or false`，直接改成 `true`；
+也可以运行 pnpm 提示的 `pnpm approve-builds` 交互式批准。）然后**重新执行**：
+
+```bash
+dsh plugin --profile web add dsh-notify-tone
+```
+
+确认输出末尾为 `Done`、无 `ERR_PNPM_IGNORED_BUILDS` 后重启 dsh 即可。
+
+> 本插件自身零依赖、无构建脚本、纯浏览器端，这个问题只在你同时安装
+> `dsh-better-sidebar` 且使用 pnpm 11 时可能出现。

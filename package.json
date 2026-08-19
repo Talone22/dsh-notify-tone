@@ -1,6 +1,6 @@
 {
   "name": "dsh-notify-tone",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "dsh web GUI 提示音插件：AI 需要用户授权/选择时与每轮回答结束时播放提示音提醒用户。多套内置音色可选（经典双音/清脆叮咚/明亮三连/柔和轻音），悬停铃铛按钮可开关、选音色并试听，状态持久化。",
   "type": "module",
   "main": "lib/index.js",
