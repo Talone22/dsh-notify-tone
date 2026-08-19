@@ -1,0 +1,8 @@
+# dsh-notify-tone bundle patch: inserts the plugin row into the web profile
+# roster. Applied as a profile bundle layer (the `dsh.bundle.patch` manifest
+# field) over dsh-base.
+#
+# 提示音功能：AI 需要授权/选择时与每轮回答结束时播放提示音。
+- insert:
+    - id: notify-tone
+      name: 'dsh-notify-tone'

@@ -1,0 +1,48 @@
+{
+  "name": "dsh-notify-tone",
+  "version": "0.1.0",
+  "description": "dsh web GUI 提示音插件：AI 需要用户授权/选择时与每轮回答结束时播放提示音提醒用户。多套内置音色可选（经典双音/清脆叮咚/明亮三连/柔和轻音），悬停铃铛按钮可开关、选音色并试听，状态持久化。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "notification",
+    "sound",
+    "tone",
+    "beep",
+    "alert"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Talone22/dsh-notify-tone.git"
+  },
+  "homepage": "https://github.com/Talone22/dsh-notify-tone#readme",
+  "bugs": {
+    "url": "https://github.com/Talone22/dsh-notify-tone/issues"
+  }
+}
