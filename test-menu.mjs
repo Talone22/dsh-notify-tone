@@ -30,7 +30,9 @@ class MockEl {
 			toggle(c, force) { const on = force ?? !this._s.has(c); on ? this._s.add(c) : this._s.delete(c); return on; },
 			contains(c) { return this._s.has(c); },
 		};
+		this.rect = { top: 500, bottom: 538 }; // 默认屏幕中部
 	}
+	getBoundingClientRect() { return this.rect; }
 	// 模拟浏览器行为：给 textContent 赋值会清空子节点
 	get textContent() { return this._text; }
 	set textContent(v) {
@@ -68,7 +70,7 @@ globalThis.localStorage = {
 	setItem(k, v) { this.store.set(k, String(v)); },
 	removeItem(k) { this.store.delete(k); },
 };
-globalThis.window = { AudioContext: undefined }; // 菜单测试不涉及声音
+globalThis.window = { AudioContext: undefined, innerWidth: 800, innerHeight: 600 }; // 菜单测试不涉及声音
 globalThis.Notification = class {
 	static permission = "granted";
 	static requestPermission() { return Promise.resolve("granted"); }
@@ -202,4 +204,15 @@ notifSwitch2.dispatch("click");
 if (t.isNotificationEnabled() !== true) throw new Error("FAIL: 再点系统通知开关未重新开启");
 console.log("PASS: 系统通知开关按钮点击正常");
 
+// ---- 7. 菜单弹出方向自适应（按钮靠近屏幕顶部 → 向下弹出，不被裁剪/遮挡） ----
+const btnEl = root.children[1]; // mountToggle 的 root 子元素顺序：menu, btn
+btnEl.rect = { top: 10, bottom: 48 }; // 模拟按钮在屏幕顶部
+root.dispatch("mouseenter");
+if (menu.style.top !== "calc(100% + 8px)") throw new Error("FAIL: 按钮在顶部时菜单应向下弹出");
+btnEl.rect = { top: 400, bottom: 438 }; // 模拟按钮在中部
+root.dispatch("mouseenter");
+if (menu.style.bottom !== "calc(100% + 8px)") throw new Error("FAIL: 按钮在中部时菜单应向上弹出");
+console.log("PASS: 菜单弹出方向自适应（顶部→向下，中部→向上）");
+
+console.log("ALL PASS ✔  菜单颜色设置交互正常（色块 / 滑块 / 双功能独立配色 / 开关）");
 console.log("ALL PASS ✔  菜单颜色设置交互正常（色块 / 滑块 / 双功能独立配色 / 开关）");
