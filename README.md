@@ -1,5 +1,7 @@
 # dsh-notify-tone（声音 + 视觉 + 系统通知提醒插件）
 
+> 本项目由 **DeepSeek** 贡献（协助设计、开发与测试）
+
 dsh web GUI 的提醒插件：
 
 - **需要操作提醒**：AI 执行任务中遇到需要用户授权或选择时（沙箱权限授权弹窗、`ask_user_question` 提问、计划审批等），同时触发提示音、屏幕光效与系统通知，提醒你回到窗口处理。
@@ -93,3 +95,9 @@ dsh plugin --profile web add dsh-notify-tone
 
 > 本插件自身零依赖、无构建脚本、纯浏览器端，这个问题只在你同时安装
 > `dsh-better-sidebar` 且使用 pnpm 11 时可能出现。
+
+## 致谢
+
+本项目由 **DeepSeek** 贡献：功能设计、代码实现、测试验证与文档编写均由 DeepSeek 协助完成，作者负责需求提出与验收。
+
+MIT License
