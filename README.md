@@ -18,7 +18,10 @@ dsh web GUI 的提醒插件：
 ![alt text](/image_3.jpg)  
 ![alt text](/image_2.jpg)
 
-## 安装
+## 安装  
+
+### 前置  
+已安装DeepSeek Harness，`dsh web`能正常启动
 
 ### 方式一：npm 安装（已发布到npm）
 
