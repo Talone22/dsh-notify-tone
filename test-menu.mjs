@@ -214,5 +214,21 @@ root.dispatch("mouseenter");
 if (menu.style.bottom !== "calc(100% + 8px)") throw new Error("FAIL: 按钮在中部时菜单应向上弹出");
 console.log("PASS: 菜单弹出方向自适应（顶部→向下，中部→向上）");
 
+// ---- 8. 菜单水平方向自适应（按钮靠近屏幕左边缘 → 向右展开，不被左边缘裁剪） ----
+menu.style.display = "none";
+// MockEl 无 offsetWidth；菜单 min-width 240 → positionMenu 回退 240
+btnEl.rect = { top: 400, bottom: 438, left: 0, right: 38 }; // 模拟按钮贴左边缘
+root.dispatch("mouseenter");
+if (menu.style.left !== "0" || menu.style.right !== "auto") throw new Error("FAIL: 按钮在左边缘时菜单应 left:0 向右展开");
+console.log("PASS: 按钮在左边缘 → 菜单左对齐向右展开（不被裁剪）");
+btnEl.rect = { top: 400, bottom: 438, left: 300, right: 338 }; // 左侧空间 300 >= 240
+root.dispatch("mouseenter");
+if (menu.style.right !== "0" || menu.style.left !== "auto") throw new Error("FAIL: 按钮左侧空间充足时应保持 right:0 向左展开");
+console.log("PASS: 按钮左侧空间充足 → 保持右对齐向左展开（默认行为不变）");
+btnEl.rect = { top: 400, bottom: 438, left: 760, right: 798 }; // 右侧空间 2 < 240（贴右边缘）
+root.dispatch("mouseenter");
+if (menu.style.right !== "0" || menu.style.left !== "auto") throw new Error("FAIL: 按钮贴右边缘时左侧空间充足应保持 right:0");
+console.log("PASS: 按钮在右边缘 → 保持右对齐向左展开（默认行为不变）");
+
 console.log("ALL PASS ✔  菜单颜色设置交互正常（色块 / 滑块 / 双功能独立配色 / 开关）");
 console.log("ALL PASS ✔  菜单颜色设置交互正常（色块 / 滑块 / 双功能独立配色 / 开关）");
