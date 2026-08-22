@@ -36,7 +36,7 @@ dsh plugin --profile web add dsh-notify-tone
 ### 方式二：从 GitHub 直接安装
 
 ```bash
-dsh plugin --profile web add git+https://github.com/<你的GitHub用户名>/dsh-notify-tone.git
+dsh plugin --profile web add git+https://github.com/Talone22/dsh-notify-tone.git
 ```
 
 ### 方式三：本地链接（开发调试）
